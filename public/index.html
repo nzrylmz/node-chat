@@ -1,0 +1,71 @@
+<html>
+<head><title>Node</title></head>
+
+<script type="text/javascript" src="/jquery/dist/jquery.min.js" ></script>
+<script type="text/javascript" src="/socketio-client-v2.0.4/dist/socket.io.js"></script>
+
+
+
+<script type="text/javascript">
+    
+    const socket = io('http://localhost:3000');
+
+    var kullanici = "";
+
+    socket.on('mesajal', data => {
+        $('.mesajlar').append("<li><b>"+data.kullanici+" : </b>"+data.mesaj+"</li>");
+        console.log(data);
+    });
+
+    const mesajGonder = async(e) => {
+        e.preventDefault();
+        if(await e.target.kullanici.value.length) {
+            socket.emit('mesaj', {kullanici:e.target.kullanici.value, mesaj:e.target.mesaj.value});
+            console.log(e);
+        }
+        $('.mesaj').val("");
+    }
+
+    
+</script>
+
+<body>
+
+<div class="ortala">
+    <div class="sayfa">
+        <h1>Node.JS Socket Chat</h1>
+        <h3>Mesajlar</h3>
+        <ul class="mesajlar">
+
+
+        </ul>
+
+        <form class="form" onsubmit="return mesajGonder(event)" >
+        <label> Kullanıcı Adı;
+            <input class="kadi" name="kullanici" placeholder="Kullanıcı Adınız"/>
+        </label><br>
+        <label> Mesaj;
+            <input class="mesaj" name="mesaj" placeholder="Mesajınız.." />
+        </label>
+        <button type="submit">Gönder</button>
+        </form>
+    </div>
+</div>
+
+
+<style rel="text/stylesheet">
+body { margin:0; padding:0; }
+ul, li, a { margin:0; padding:0; text-decoration:none; list-style: none; }
+.ortala { width: 1000px; margin: 0 auto; }
+.sayfa { width: calc(100% - 20px); float:left; height:100%; padding:10px; background: linear-gradient(to bottom, #f3f3f3, #fff); }
+.mesajlar { width: calc(100% - 10px); float:left; height: 50%; overflow-y: auto; overflow-x: hidden; padding: 15px 5px; margin-bottom:15px;  }
+.mesajlar h3 { width:100%; float:left;  }
+.form label { width:100%; padding: 12px 0; float:left;}
+.form .kadi { width:100%; float:left; }
+.form .mesaj { width:100%; height: 4%; float:left; }
+.form button { width:100%; height: 3%; float:left; }
+
+</style>
+
+</body>
+</html>

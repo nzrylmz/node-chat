@@ -1,0 +1,11 @@
+{
+  "name": "node",
+  "main": "app.js",
+  "license": "ISC",
+  "description": "",
+  "homepage": "",
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "socketio-client-v2.0.4": "*"
+  }
+}
